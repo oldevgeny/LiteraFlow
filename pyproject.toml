@@ -1,0 +1,136 @@
+[tool.poetry]
+name = "literaflow"
+version = "0.1.0"
+description = ""
+authors = ["Evgenii"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+aiohttp = {extras = ["speedups"], version = "^3.10.9"}
+asyncpg = "^0.29.0"
+pandas = "^2.2.3"
+pytest-aiohttp = "^1.0.5"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.35"}
+loguru = "^0.7.2"
+aiodns = "^3.2.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+pytest-aiohttp = "^1.0.5"
+ruff = "^0.6.9"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py312"
+lint.task-tags = ["TODO", "FIXME", "NOTE"]
+fix = true
+show-fixes = true
+preview = true
+respect-gitignore = false
+line-length = 88    # Same as Black.
+indent-width = 4    # Same as Black.
+lint.select = [
+    "F",      # PyFlakes
+    "I",      # isort
+    "UP",     # PyUpgrade
+    "YTT",    # flake8-2020
+    "ASYNC",  # flake8-async
+    "ASYNC1", # flake8-trio
+    "B",      # bugbear
+    "C4",     # flake8-comprehensions
+    "T10",    # flake8-debugger
+    "EXE",    # flake8-executable
+    "INP",    # flake8-no-pep420
+    "PIE",    # flake8-pie
+    "PYI",    # flake8-pyi
+    "PT",     # flake8-pytest
+    "Q",      # flake8-quotes
+    "RSE",    # flake8-raise
+    "SLF",    # flake8-self
+    "SIM",    # flake8-simplify
+    "TID",    # flake8-tidy-imports
+    "TCH",    # flake8-type-checking
+    "INT",    # flake8-gettext
+    "ERA",    # flake8-eradicate
+    "PGH",    # pygrep-hooks
+    "FLY",    # flynt
+    "NPY",    # NumPy-specific rules
+    "PERF",   # Perflint
+    "FURB",   # Refurb
+    "LOG",    # flake8-logging
+    "RUF",    # Ruff-specific rules
+    "S",      # flake8-bandit
+    "T20",    # flake8-print
+    "ARG",    # flake8-unused-arguments
+
+    "DTZ",    # flake8-datetimez
+    "PD",     # pandas-vet
+
+    "C90",    # McCabe
+    "ANN",    # flake8-annotations
+    "FBT",    # flake8-boolean-trap
+    "RET",    # flake8-return
+    "PTH",    # flake8-use-pathlib
+    "TD",     # flake8-todo
+    "FIX",    # flake8-fixme
+
+    "N",      # pep8-naming
+    "D",      # flake8-docstrings
+    "BLE",    # flake8-blind-except
+    "A",      # builtins
+    "SLOT",   # flake8-slot
+    "PL",     # pylint
+
+    "W292"    # newline at end of file
+]
+lint.ignore = [
+    "D203", "D212", "D100", "D101", "ANN201", "D104", "D106"
+]
+exclude = [     # Exclude a variety of commonly ignored directories.
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".env",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".idea",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "infra",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+include = ["pyproject.toml"]
+
+
+[tool.ruff.format]
+quote-style = "double"
+exclude = ["*.pyi"]
+
+
+[tool.ruff.lint.isort]
+order-by-type = false
+
+[tool.ruff.lint.per-file-ignores]
+"*/tests.py" = ["S101"]

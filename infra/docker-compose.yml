@@ -1,0 +1,42 @@
+services:
+  db:
+    container_name: literaflow_db
+    image: postgres:16.3-bookworm
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U literaflow_insecure_user -d literaflow_insecure_name"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5524:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - literaflow_network
+    env_file:
+      - ../.env.local
+  web:
+    container_name: literaflow_web
+    restart: always
+    build:
+      context: ..
+      dockerfile: ./infra/Dockerfile.dev
+    command: poetry run python literaflow/main.py
+    volumes:
+      - ..:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - literaflow_network
+    env_file:
+      - ../.env.local
+
+volumes:
+  db_data:
+
+networks:
+  literaflow_network:
+    driver: bridge
