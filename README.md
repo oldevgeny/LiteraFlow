@@ -321,7 +321,10 @@ While the current implementation meets the basic requirements, there are several
 - **Issue:** The application may not support multiple languages or locale-specific formatting.
 - **Improvement:** Implement internationalization frameworks to support multiple languages and date formats.
 - **Benefit:** Makes the application accessible to a wider audience.
-
+10.	**External Storage for Book Files (e.g., Amazon S3):**
+- **Issue:** Currently, book files are stored locally in the books/ directory on the server, which may not be scalable or reliable for large volumes of data or distributed systems.
+- **Improvement:** Integrate external storage solutions like Amazon S3, Google Cloud Storage, or Azure Blob Storage for storing book files.
+- **Benefit:** Provides scalable, durable, and highly available storage. It allows for better handling of large files, reduces server storage requirements, and enables easier scaling and distribution of the application across multiple servers or regions.
 
 ## License
 
