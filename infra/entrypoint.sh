@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Apply database migrations
-poetry run python literaflow/main.py
+poetry run python main.py
 
 # Start the server
 exec "$@"

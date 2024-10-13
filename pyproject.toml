@@ -14,11 +14,18 @@ pytest-aiohttp = "^1.0.5"
 sqlalchemy = {extras = ["asyncio"], version = "^2.0.35"}
 loguru = "^0.7.2"
 aiodns = "^3.2.0"
+pydantic = "^2.9.2"
+pydantic-settings = "^2.5.2"
+aiofiles = "^24.1.0"
+pytest-asyncio = "^0.24.0"
+aiohttp-cors = "^0.7.0"
+openpyxl = "^3.1.5"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
 pytest-aiohttp = "^1.0.5"
 ruff = "^0.6.9"
+faker = "^30.3.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -133,4 +140,9 @@ exclude = ["*.pyi"]
 order-by-type = false
 
 [tool.ruff.lint.per-file-ignores]
-"*/tests.py" = ["S101"]
+"./tests/*" = ["S101"]
+
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"

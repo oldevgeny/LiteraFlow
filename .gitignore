@@ -158,3 +158,8 @@ cython_debug/
 .idea/
 
 .env.local
+
+# media
+books/
+
+.DS_Store

@@ -22,7 +22,7 @@ services:
     build:
       context: ..
       dockerfile: ./infra/Dockerfile.dev
-    command: poetry run python literaflow/main.py
+    command: poetry run python main.py
     volumes:
       - ..:/app
     ports:

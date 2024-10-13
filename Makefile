@@ -6,10 +6,7 @@ SOURCES := $(shell find . -name '*.py')
 DOCKER_COMPOSE_LOCAL_FILE = infra/docker-compose.yml
 
 ENV_DEV_FILE = ./.env.local
-
-define export_env
-  export $(shell sed 's/=.*//' $(ENV_TEST_FILE))
-endef
+ENV_TEST_FILE = ./.env.test
 
 run: ## Run the project
 	$(if $(findstring arm64,$(shell uname -m)),\
@@ -19,8 +16,8 @@ run: ## Run the project
 
 restart: ## Restart the project
 	$(if $(findstring arm64,$(shell uname -m)),\
-	DB_NAME=$(DB_NAME) DB_USER=$(DB_USER) DB_PASS=$(DB_PASS) DB_HOST=$(DB_HOST) DOCKER_DEFAULT_PLATFORM=linux/arm64 docker compose -f ${DOCKER_COMPOSE_LOCAL_FILE} restart,\
-	DB_NAME=$(DB_NAME) DB_USER=$(DB_USER) DB_PASS=$(DB_PASS) DB_HOST=$(DB_HOST) docker compose -f ${DOCKER_COMPOSE_LOCAL_FILE} restart)
+	DB_NAME=$(DB_NAME) DB_USER=$(DB_USER) DB_PASS=$(DB_PASS) DB_HOST=$(DB_HOST) DOCKER_DEFAULT_PLATFORM=linux/arm64 docker compose -f ${DOCKER_COMPOSE_LOCAL_FILE} restart web,\
+	DB_NAME=$(DB_NAME) DB_USER=$(DB_USER) DB_PASS=$(DB_PASS) DB_HOST=$(DB_HOST) docker compose -f ${DOCKER_COMPOSE_LOCAL_FILE} restart web)
 .PHONY: restart
 
 
@@ -48,7 +45,5 @@ format: ## Format the source code
 .PHONY: format
 
 test: ## Run tests
-	$(if $(findstring arm64,$(shell uname -m)),\
-	DB_NAME=$(DB_NAME) DB_USER=$(DB_USER) DB_PASS=$(DB_PASS) DB_HOST=$(DB_HOST) DOCKER_DEFAULT_PLATFORM=linux/arm64 docker compose -f ${DOCKER_COMPOSE_LOCAL_FILE} run --rm web python onhires_drf_test_task/manage.py test wallet,\
-	DB_NAME=$(DB_NAME) DB_USER=$(DB_USER) DB_PASS=$(DB_PASS) DB_HOST=$(DB_HOST) docker compose -f ${DOCKER_COMPOSE_LOCAL_FILE} run --rm web python onhires_drf_test_task/manage.py test wallet)
+	@set -o allexport; source $(ENV_TEST_FILE); set +o allexport; $(.PY) pytest -s -vvv -o log_cli=true -o log_cli_level=DEBUG
 .PHONY: test
