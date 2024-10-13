@@ -1,5 +1,4 @@
 import sqlalchemy.ext.asyncio as sa_asyncio_ext
-
 import sqlalchemy.orm as sa_orm
 
 from literaflow.core.config import postgresql_connection_settings
